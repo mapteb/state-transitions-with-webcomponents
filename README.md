@@ -1,6 +1,6 @@
 # State Transitions with Web Components
 
-This project explores the use of a state machine and web components for a TodoMVC UI application. This project is a refactored version of the previous project [todomvc-revisted](https://github.com/mapteb/todomvc-revisited) where vanilla JavaScript functions are replaced with [web components](https://www.webcomponents.org/introduction).
+This project explores the use of a state machine and web components for a TodoMVC UI application. This project is a refactored version of the previous project [todomvc-revisted](https://github.com/mapteb/todomvc-revisited) to replace the vanilla JavaScript functions with [web components](https://www.webcomponents.org/introduction).
 
 ## Demo
 
@@ -15,9 +15,9 @@ To use this framework the following steps are suggested:
    See appStates and appEvents in the HTML file.
 3. Setup the HTML template,
    Identify the custom element tags for the application.
-   See the input-comp, checkbox-group-comp and button-comp tags used in this demo.
+   See the **input-comp**, **checkbox-group-comp** and **button-comp** tags used in this demo.
 4. Create the corresponding web components.
-   See input-comp.js, checkbox-group-comp.js and button-comp.js
+   See **input-comp.js**, **checkbox-group-comp.js** and **button-comp.js**
 5. Update the HTML file to add script tags for the above js files.
 
 The following state transitions are assumed for the demo TodoMVC UI application are:
@@ -42,4 +42,3 @@ readyForAddSelectUnselectDelete - changeTodo - processChangeTodo - changeTodoSuc
 readyForAddSelectUnselectDelete - changeTodo - processChangeTodo - changeTodoSuccessSomeSelected - readyForAddSelectUnselectDelete
 readyForAddSelectUnselectDelete - deleteTodo - processDeleteTodo - deleteTodoSuccessNoneSelected - readyForAddSelect
 </pre>
-
