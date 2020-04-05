@@ -6,15 +6,16 @@ This project explores the use of a state machine and web components for a TodoMV
 
 To use this framework the following steps are suggested:
 
-1. Write the state transitions for the UI application(see the table below for an example)
-2. Configure the states and events in JavaScript const variables.
-   See appStates and appEvents in the HTML file.
-3. Setup the HTML template,
-   Identify the custom element tags for the application.
-   See the **input-comp**, **checkbox-group-comp** and **button-comp** tags used in this demo.
-4. Create the corresponding web components.
-   See **input-comp.js**, **checkbox-group-comp.js** and **button-comp.js**
-5. Update the HTML file to add script tags for the above js files.
+1. Setup an HTML template for the UI application identifying the locations for the custom elements to be backed by the web components.
+
+2. Add scrtipt tags to the HTML file to reference the web component files
+
+3. Configure the states and events identified in the above state transitions table.
+
+4. Write code in the processor() functions to communicate with the web components via the corresponding custom elements.
+
+5. Add the state machine controller code
+
 
 The following state transitions are assumed for the demo TodoMVC UI application are:
 

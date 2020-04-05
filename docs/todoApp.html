@@ -168,33 +168,26 @@
                 process: function (e, handlePostEvent) {
 
                     //user entered a todo text, create a new input checkbox element
-                    //consol.log(">>> got it: ", e.detail.value);
                     let el = document.getElementById("changeTodo");
                     let maxId = appData.maxId() + 1;
                     let data = { name: "changeTodo", value: maxId, action: "create", todoText: e.detail.value };
-                    //consol.log(">>> data: ", data);
                     el.setAttribute("data-request", JSON.stringify(data));
 
                     //determine whether none selected or some selected
-                    //consol.log(">>> selItems: ", appData.selectedItems());
                     let evttype = '';
                     if (appData.selectedCount() > 0 &&
                         appData.itemsCount() - appData.selectedCount() > 0) {
-                        //consol.log(">> len: " + appData.selectedCount());
                         evttype = 'addTodoSuccessSomeSelected';
                     } else {
                         evttype = 'addTodoSuccessNoneSelected';
                     }
 
-                    //consol.log(">>> custom: ", evttype);
-                    //if(e.target!=null && e.target.value !=undefined)
                     handlePostEvent(new CustomEvent(evttype));
                 }
             },
             addTodoSuccessNoneSelected: {
 
                 nextState: function (e) {
-                    //consol.log(">>> set view: ", e);
                     return appStates.readyForAddSelect(e);
                 }
             }
@@ -212,19 +205,15 @@
                     console.log(">>> selected value: ", selectedItem);
                     //if checked then create a delete button
                     if (selectedItem != null) {
-                        //e.detail.id = "deleteTodo";
-                        //createInputButtonElement(document.getElementById("deleteTodo"), e.detail);
                         let data = { name: "deleteTodo", value: "Delete" };
                         document.getElementById("deleteTodo").setAttribute("data-request", JSON.stringify(data));
 
                         //update the selectedCount
-                        //.updateSelectedItem(Number(selectedItem));
                         data = { name: "changeTodo", action: "update", value: Number(selectedItem) };
                         //consol.log(">>> data: ", data);
                         document.getElementById("changeTodo").setAttribute("data-request", JSON.stringify(data));
                     }
                     //now determine whether none selected, some selected or all selected
-                    //consol.log(">>> itemsCount", appData.itemsCount(), appData.selectedCount());
                     if (appData.selectedCount() > 0) {
                         if (appData.selectedCount() == appData.itemsCount()) {
                             evttype = 'changeTodoSuccessAllSelected';
@@ -288,24 +277,22 @@
         };
 
         function handleAppEvent(customEventName, eventDta) {
-            //consol.log(">>> bef: ", customEventName, eventDta);
             var todoEvent = new CustomEvent(customEventName, {
                 detail: {
                     value: eventDta
                 }
             });
-            //consol.log(">>> aft: ", todoEvent);
             stateTransitionsManager(todoEvent);
         };
-
-        function handlePostEvent(e) {
-            //consol.log(">>> port:?" + e.type + "<");
-            appEvents[e.type].nextState(e);
-        }
 
         function stateTransitionsManager(todoEvent) {
             var todoEventAft = appEvents[todoEvent.type].process(todoEvent, handlePostEvent);
 
+        }
+
+        
+        function handlePostEvent(e) {
+            appEvents[e.type].nextState(e);
         }
 
     </script>
