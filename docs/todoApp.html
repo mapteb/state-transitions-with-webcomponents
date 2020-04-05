@@ -94,13 +94,6 @@
                 let data = JSON.parse(document.getElementById("changeTodo").getAttribute("data-response"));
                 return data.selectedItems;
             }
-            // ,
-            // updateSelectedItem: function (value) {
-            //     let selItms = document.getElementById("changeTodo").getAttribute("selected-items");
-            //     let SelItmsArray = JSON.parse(selItms);
-            //     SelItmsArray.push(value);
-            //     document.getElementById("changeTodo").setAttribute("selected-items", JSON.stringify(SelItmsArray));
-            // }
         };
 
         const appStates = {
@@ -122,18 +115,12 @@
                 document.getElementById("currentState").innerHTML = e.type + ' => readyForAddSelect';
             },
             readyForAddUnselectDelete: function (e) {
-
-                //document.getElementById("addTodo").getElementsByTagName("input")[0].value = "";
-                //document.getElementById("addTodo").getElementsByTagName("input")[0].focus();
                 document.getElementById("addTodoView").style.display = "block";
                 document.getElementById("changeTodoView").style.display = "block";
                 document.getElementById("deleteTodoView").style.display = "block";
                 document.getElementById("currentState").innerHTML = e.type + ' => readyForAddUnselectDelete';
             },
             readyForAddSelectUnselectDelete: function (e) {
-
-                //document.getElementById("addTodo").getElementsByTagName("input")[0].value = "";
-                //document.getElementById("addTodo").getElementsByTagName("input")[0].focus();
                 document.getElementById("addTodoView").style.display = "block";
                 if (appData.itemsCount() > 0) document.getElementById("changeTodoView").style.display = "block";
                 else document.getElementById("changeTodoView").style.display = "none";
@@ -203,7 +190,7 @@
                 process: function (e, handlePostEvent) {
                     let selectedItem = e.detail.value
                     let evttype = '';
-                    //consol.log(">>> selected value: ", selectedItem);
+                    console.log(">>> selected value: ", selectedItem);
                     //if checked then create a delete button
                     if (selectedItem != null) {
                         //e.detail.id = "deleteTodo";

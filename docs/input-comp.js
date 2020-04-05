@@ -1,11 +1,9 @@
 class InputComp extends HTMLElement {
     static get observedAttributes() {
-        return ['data-request', 'data-clear'];
+        return ['data-request'];
     }
     constructor() {
         super();
-        this.added = false;
-        //this = this.attachShadow({ mode: 'open' });
     }
 
     attributeChangedCallback(name, oldVal, newVal) {
