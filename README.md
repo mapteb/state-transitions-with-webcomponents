@@ -14,7 +14,7 @@ To use this framework the following steps are suggested:
 
 4. Write code in the processor() functions to communicate with the web components via the corresponding custom elements.
 
-5. Add the state machine controller code
+5. Add the state machine controller code (see handleAppEvent() and handlePostEvent() functions in the HTML file)
 
 
 The following state transitions are assumed for the demo TodoMVC UI application are:
