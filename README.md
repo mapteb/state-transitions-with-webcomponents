@@ -2,10 +2,6 @@
 
 This project explores the use of a state machine and web components for a TodoMVC UI application. This project is a refactored version of the previous project [todomvc-revisted](https://github.com/mapteb/todomvc-revisited) to replace the vanilla JavaScript functions with [web components](https://www.webcomponents.org/introduction).
 
-## Demo
-
-An online demo of this application is available at the [Todo App](https://mapteb.github.io/todomvc-revisited/todoApp.html).
-
 ## Usage
 
 To use this framework the following steps are suggested:
@@ -43,3 +39,6 @@ readyForAddSelectUnselectDelete - changeTodo - processChangeTodo - changeTodoSuc
 readyForAddSelectUnselectDelete - deleteTodo - processDeleteTodo - deleteTodoSuccessNoneSelected - readyForAddSelect
 </pre>
 
+## Demo
+
+An online demo of this application is available at the [Todo App](https://mapteb.github.io/state-transitions-with-webcomponents/todoApp.html)
