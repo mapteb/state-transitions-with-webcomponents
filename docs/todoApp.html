@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="ISO-8859-1">
+    <title>A Design Pattern for UI Development</title>
+    <style>
+        .grids-example {
+            background: rgb(250, 250, 250);
+            margin: 2em auto;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            font-family: Consolas, 'Liberation Mono', Courier, monospace;
+            text-align: center;
+        }
+
+        .xsmall {
+            font-size: 70%;
+        }
+
+        .small {
+            font-size: 85%;
+        }
+
+        div.red {
+            color: red;
+        }
+    </style>
+</head>
+
+<body onload="handleAppEvent('onload', '')">
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <div class="pure-g">
+        <div class="pure-u-1-4">&nbsp;</div>
+        <section id="todoApp" class="pure-u-1-2">
+            <div id="currentState" class="red, small">&nbsp;</div>
+            <div>&nbsp;</div>
+            <section id="addTodoView" style="display: none;">
+                <input-comp id="addTodo" data-request="" data-response=""></input-comp>
+            </section>
+        </section>
+        <section id="changeTodoView" style="display: none;">
+            <p></p>
+            <checkbox-group-comp id="changeTodo" data-request="" data-response=""></checkbox-group-comp>
+            <p></p>
+        </section>
+        <section id="deleteTodoView" style="display: none;">
+            <button-comp id="deleteTodo" data-request=""></button-comp>
+        </section>
+        </section>
+    </div>
+    <div class="pure-u-1-4">&nbsp;</div>
+    </div>
+
+    <script type="text/javascript">
+        /*	
+        unknownState                    - onload     - processOnload     - onloadSuccess                 - readyForAdd 
+        readyForAdd                     - addTodo    - processAddTodo    - addTodoSuccessNoneSelected    - readyForAddSelect
+        readyForAddSelect               - addTodo    - processAddTodo    - addTodoSuccessNoneSelected    - readyForAddSelect
+        readyForAddSelect               - changeTodo - processChangeTodo - changeTodoSuccessSomeSelected - readyForAddSelectUnselectDelete 
+        readyForAddSelect               - changeTodo - processChangeTodo - changeTodoSuccessAllSelected  - readyForAddUnselectDelete												
+        readyForAddUnselectDelete       - addTodo    - processAddTodo    - addTodoSuccessSomeSelected    - readyForAddSelectUnselectDelete
+        readyForAddUnselectDelete       - changeTodo - processchangeTodo - changeTodoSuccessNoneSelected - readyForAddSelect
+        readyForAddUnselectDelete       - changeTodo - processchangeTodo - changeTodoSuccessSomeSelected - readyForAddSelectUnselectDelete
+        readyForAddUnselectDelete       - deleteTodo - processDeleteTodo - deleteTodoSuccessAllDeleted   - readyForAdd											 
+        readyForAddSelectUnselectDelete - addTodo    - processAddTodo    - addTodoSuccessSomeSelected    - readyForAddUnselectDelete
+        readyForAddSelectUnselectDelete - changeTodo - processChangeTodo - changeTodoSuccessAllSelected  - readyForAddUnselectDelete
+        readyForAddSelectUnselectDelete - changeTodo - processChangeTodo - changeTodoSuccessSomeSelected - readyForAddSelectUnselectDelete															 
+        readyForAddSelectUnselectDelete - changeTodo - processChangeTodo - changeTodoSuccessNoneSelected - readyForAddSelect
+        readyForAddSelectUnselectDelete - changeTodo - processChangeTodo - changeTodoSuccessSomeSelected - readyForAddSelectUnselectDelete															 
+        readyForAddSelectUnselectDelete - deleteTodo - processDeleteTodo - deleteTodoSuccessNoneSelected - readyForAddSelect
+        */
+
+        const appData = {
+            maxId: function () {
+                let data = document.getElementById("changeTodo").getAttribute("data-response");
+                if (data.length > 0) {
+                    return JSON.parse(data).maxId;
+                }
+                return 0;
+            },
+            selectedCount: function () {
+                return appData.selectedItems().length;
+            },
+            itemsCount: function () {
+                let data = JSON.parse(document.getElementById("changeTodo").getAttribute("data-response"));
+                return data.itemsCount;
+            },
+            selectedItems: function () {
+                let data = JSON.parse(document.getElementById("changeTodo").getAttribute("data-response"));
+                return data.selectedItems;
+            }
+            // ,
+            // updateSelectedItem: function (value) {
+            //     let selItms = document.getElementById("changeTodo").getAttribute("selected-items");
+            //     let SelItmsArray = JSON.parse(selItms);
+            //     SelItmsArray.push(value);
+            //     document.getElementById("changeTodo").setAttribute("selected-items", JSON.stringify(SelItmsArray));
+            // }
+        };
+
+        const appStates = {
+            readyForAdd: function (e) {
+
+                document.getElementById("addTodoView").style.display = "block";
+                document.getElementById("changeTodoView").style.display = "none";
+                document.getElementById("deleteTodoView").style.display = "none";
+                document.getElementById("currentState").innerHTML = e.type + ' => readyForAdd';
+            },
+            readyForAddSelect: function (e) {
+
+
+                //document.getElementById("addTodo").getElementsByTagName("input")[0].value = "";
+                //document.getElementById("addTodo").getElementsByTagName("input")[0].focus();
+                document.getElementById("addTodoView").style.display = "block";
+                document.getElementById("changeTodoView").style.display = "block";
+                document.getElementById("deleteTodoView").style.display = "none";
+                document.getElementById("currentState").innerHTML = e.type + ' => readyForAddSelect';
+            },
+            readyForAddUnselectDelete: function (e) {
+
+                //document.getElementById("addTodo").getElementsByTagName("input")[0].value = "";
+                //document.getElementById("addTodo").getElementsByTagName("input")[0].focus();
+                document.getElementById("addTodoView").style.display = "block";
+                document.getElementById("changeTodoView").style.display = "block";
+                document.getElementById("deleteTodoView").style.display = "block";
+                document.getElementById("currentState").innerHTML = e.type + ' => readyForAddUnselectDelete';
+            },
+            readyForAddSelectUnselectDelete: function (e) {
+
+                //document.getElementById("addTodo").getElementsByTagName("input")[0].value = "";
+                //document.getElementById("addTodo").getElementsByTagName("input")[0].focus();
+                document.getElementById("addTodoView").style.display = "block";
+                if (appData.itemsCount() > 0) document.getElementById("changeTodoView").style.display = "block";
+                else document.getElementById("changeTodoView").style.display = "none";
+                document.getElementById("deleteTodoView").style.display = "block";
+                document.getElementById("currentState").innerHTML = e.type + ' => readyForAddSelectUnselectDelete';
+            }
+
+        };
+
+        const appEvents = {
+            onload: {
+                process: function (e, handlePostEvent) {
+                    //for onload just ceate a new input textbox element
+                    const data = { name: "addTodo", action: "create", todoText: "" };
+                    let el = document.getElementById("addTodo");
+                    el.setAttribute("data-request", JSON.stringify(data));
+                    handlePostEvent(new CustomEvent('onloadSuccess'));
+                }
+            },
+            onloadSuccess: {
+                nextState: function (e) {
+                    return appStates.readyForAdd(e);
+                }
+            },
+            addTodo: {
+                process: function (e, handlePostEvent) {
+
+                    //user entered a todo text, create a new input checkbox element
+                    //consol.log(">>> got it: ", e.detail.value);
+                    let el = document.getElementById("changeTodo");
+                    let maxId = appData.maxId() + 1;
+                    let data = { name: "changeTodo", value: maxId, action: "create", todoText: e.detail.value };
+                    //consol.log(">>> data: ", data);
+                    el.setAttribute("data-request", JSON.stringify(data));
+
+                    //determine whether none selected or some selected
+                    //consol.log(">>> selItems: ", appData.selectedItems());
+                    let evttype = '';
+                    if (appData.selectedCount() > 0 &&
+                        appData.itemsCount() - appData.selectedCount() > 0) {
+                        //consol.log(">> len: " + appData.selectedCount());
+                        evttype = 'addTodoSuccessSomeSelected';
+                    } else {
+                        evttype = 'addTodoSuccessNoneSelected';
+                    }
+
+                    //consol.log(">>> custom: ", evttype);
+                    //if(e.target!=null && e.target.value !=undefined)
+                    handlePostEvent(new CustomEvent(evttype));
+                }
+            },
+            addTodoSuccessNoneSelected: {
+
+                nextState: function (e) {
+                    //consol.log(">>> set view: ", e);
+                    return appStates.readyForAddSelect(e);
+                }
+            }
+            ,
+            addTodoSuccessSomeSelected: {
+
+                nextState: function (e) {
+                    return appStates.readyForAddSelectUnselectDelete(e);
+                }
+            },
+            changeTodo: {
+                process: function (e, handlePostEvent) {
+                    let selectedItem = e.detail.value
+                    let evttype = '';
+                    //consol.log(">>> selected value: ", selectedItem);
+                    //if checked then create a delete button
+                    if (selectedItem != null) {
+                        //e.detail.id = "deleteTodo";
+                        //createInputButtonElement(document.getElementById("deleteTodo"), e.detail);
+                        let data = { name: "deleteTodo", value: "Delete Todo" };
+                        document.getElementById("deleteTodo").setAttribute("data-request", JSON.stringify(data));
+
+                        //update the selectedCount
+                        //.updateSelectedItem(Number(selectedItem));
+                        data = { name: "changeTodo", action: "update", value: Number(selectedItem) };
+                        //consol.log(">>> data: ", data);
+                        document.getElementById("changeTodo").setAttribute("data-request", JSON.stringify(data));
+                    }
+                    //now determine whether none selected, some selected or all selected
+                    //consol.log(">>> itemsCount", appData.itemsCount(), appData.selectedCount());
+                    if (appData.selectedCount() > 0) {
+                        if (appData.selectedCount() == appData.itemsCount()) {
+                            evttype = 'changeTodoSuccessAllSelected';
+                        } else if (appData.itemsCount() - appData.selectedCount() > 0) {
+                            evttype = 'changeTodoSuccessSomeSelected';
+                        }
+                    } else {
+                        evttype = 'changeTodoSuccessNoneSelected';
+                    }
+
+                    handlePostEvent(new CustomEvent(evttype));
+                }
+            },
+            changeTodoSuccessSomeSelected: {
+
+                nextState: function (e) {
+                    return appStates.readyForAddSelectUnselectDelete(e);
+                }
+            },
+            changeTodoSuccessAllSelected: {
+
+                nextState: function (e) {
+                    return appStates.readyForAddUnselectDelete(e);
+                }
+            },
+            changeTodoSuccessNoneSelected: {
+
+                nextState: function (e) {
+                    return appStates.readyForAddSelect(e);
+                }
+            },
+            deleteTodo: {
+                process: function (e, handlePostEvent) {
+                    //delete selected items
+                    let data = { name: "changeTodo", action: "delete", values: appData.selectedItems() };
+                    console.log(">>> data: ", appData.selectedItems());
+                    document.getElementById("changeTodo").setAttribute("data-request", JSON.stringify(data));
+
+                    //determine whether none selected or all deleted
+                    let evttype = '';
+                    if (appData.itemsCount() > 0 &&
+                        appData.selectedCount() == 0) {
+                        evttype = 'deleteTodoSuccessNoneSelected';
+                    }
+                    else evttype = 'deleteTodoSuccessAllDeleted';
+                    handlePostEvent(new CustomEvent(evttype));
+                }
+
+            },
+            deleteTodoSuccessNoneSelected: {
+                nextState: function (e) {
+                    return appStates.readyForAddSelect(e);
+                }
+            },
+
+            deleteTodoSuccessAllDeleted: {
+                nextState: function (e) {
+                    return appStates.readyForAdd(e);
+                }
+            }
+        };
+
+        function handleAppEvent(customEventName, eventDta) {
+            //consol.log(">>> bef: ", customEventName, eventDta);
+            var todoEvent = new CustomEvent(customEventName, {
+                detail: {
+                    value: eventDta
+                }
+            });
+            //consol.log(">>> aft: ", todoEvent);
+            stateTransitionsManager(todoEvent);
+        };
+
+        function handlePostEvent(e) {
+            //consol.log(">>> port:?" + e.type + "<");
+            appEvents[e.type].nextState(e);
+        }
+
+        function stateTransitionsManager(todoEvent) {
+            var todoEventAft = appEvents[todoEvent.type].process(todoEvent, handlePostEvent);
+
+        }
+
+    </script>
+    <script src="input-comp.js"></script>
+    <script src="checkbox-group-comp.js"></script>
+    <script src="button-comp.js"></script>
+</body>
+
+</html>
