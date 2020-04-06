@@ -190,14 +190,12 @@
                 }
             },
             addTodoSuccessNoneSelected: {
-
                 nextState: function (e) {
                     return appStates.readyForAddSelect(e);
                 }
             }
             ,
             addTodoSuccessSomeSelected: {
-
                 nextState: function (e) {
                     return appStates.readyForAddSelectUnselectDelete(e);
                 }
@@ -232,13 +230,11 @@
                 }
             },
             changeTodoSuccessSomeSelected: {
-
                 nextState: function (e) {
                     return appStates.readyForAddSelectUnselectDelete(e);
                 }
             },
             changeTodoSuccessAllSelected: {
-
                 nextState: function (e) {
                     return appStates.readyForAddUnselectDelete(e);
                 }

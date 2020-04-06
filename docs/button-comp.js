@@ -4,8 +4,6 @@ class ButtonComp extends HTMLElement {
     }
     constructor() {
       super();
-      // Attach a shadow root to the element.
-      //this = this.attachShadow({ mode: 'open' });
     }
 
     attributeChangedCallback(name, oldVal, newVal) {
@@ -22,7 +20,6 @@ class ButtonComp extends HTMLElement {
         let el = this.querySelector('button');
         if (el != undefined) {
             el.addEventListener('click', (e) => {
-                //consol.log(">>> dispatching click evt: ");
                 this.dispatchEvent(
                     new CustomEvent('onClick', {
                         detail: { eventData: e.target.value }
@@ -36,9 +33,7 @@ class ButtonComp extends HTMLElement {
 
     createInputButtonElement(data) {
         let res = '<input type="button" name="' + data.name + '"  class="pure-button" value="' + data.value + '" onclick="handleAppEvent(\'' + data.name + '\', this.value)">';
-        //consol.log(res);
         return res;
     }    
   }
-
   window.customElements.define('button-comp', ButtonComp);

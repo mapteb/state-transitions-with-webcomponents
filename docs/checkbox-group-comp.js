@@ -10,7 +10,6 @@ class CheckboxGroupComp extends HTMLElement {
         if (newVal != null && newVal != undefined && newVal.length > 0 && name === 'data-request') {
             var data = JSON.parse(newVal);
             if (data != null && data.action === 'create') {
-                //consol.log(">>> checkbox create request: ", data);
                 this.appendChild(this.createCheckboxElement(data));
             } else if (data != null && data.action === 'delete') {
                 console.log(">>> checkbox delete request: ", data.values);
@@ -18,7 +17,6 @@ class CheckboxGroupComp extends HTMLElement {
             } else if (data != null && data.action === 'update') {
                 for (let cn of this.childNodes) {
                     if (cn.nodeType == 1 && cn.nodeName == 'INPUT' && cn.value === data.value) {
-                        //consol.log(">>> checkbox updating: ", cn.value);
                         cn.checked = !cn.checked;
                     }
                 }
@@ -32,7 +30,6 @@ class CheckboxGroupComp extends HTMLElement {
             let selected = nodesArray.filter(n => n.checked).map(n => Number(n.value));
             let allItems = nodesArray.map(n => Number(n.value));
             let maxVal = Math.max(...allItems);
-            //consol.log(">>> maxVal: ", allItems, maxVal);
             let resp = { itemsCount: total, selectedItems: selected, maxId: maxVal }
             this.setAttribute("data-response", JSON.stringify(resp));
         }
@@ -63,8 +60,5 @@ class CheckboxGroupComp extends HTMLElement {
     deleteCheckboxElements(data) {
         data.values.forEach(i => this.removeChild(document.getElementById("div" + i)));
     }
-
-
-
 }
 window.customElements.define('checkbox-group-comp', CheckboxGroupComp);

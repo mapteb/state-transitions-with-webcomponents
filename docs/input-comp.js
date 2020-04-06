@@ -11,7 +11,6 @@ class InputComp extends HTMLElement {
         if (newVal != null && newVal != undefined && newVal.length > 0 && name === 'data-request') {
             const data = JSON.parse(newVal);
             if (data != null && data.action === 'create') {
-                //consol.log(">>> newVal: " + newVal);
                 this.innerHTML = this.createInputTxtElem(data).outerHTML;
             }
         }
@@ -23,6 +22,7 @@ class InputComp extends HTMLElement {
         var e = document.createElement("input");
 
         e.setAttribute("name", data.name);
+        e.setAttribute("placeholder", "Enter your text...");
         e.setAttribute("type", "text");
         e.setAttribute("value", data.todoText);
         e.setAttribute("onchange", "handleAppEvent('" + data.name + "', this.value)");
