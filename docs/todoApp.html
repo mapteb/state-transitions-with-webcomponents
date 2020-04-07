@@ -278,16 +278,20 @@
 
         function handleAppEvent(customEventName, eventDta) {
 
+            //receive the document onload event
             appEventHelper(customEventName, eventDta);
 
+            //receive the input textbox event
             document.getElementById("addTodo").addEventListener('change', e => {
                 appEventHelper('addTodo', e.target.value);
             });
 
+            //receive the checkbox event
             document.getElementById("changeTodo").addEventListener('change', e => {
                 appEventHelper('changeTodo', e.target.value);
             });
 
+            //receive the button event
             document.getElementById("deleteTodo").addEventListener('click', e => {
                     appEventHelper('deleteTodo', e.target.value);
             });
