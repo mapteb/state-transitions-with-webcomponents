@@ -25,7 +25,6 @@ class InputComp extends HTMLElement {
         e.setAttribute("placeholder", "Enter your text...");
         e.setAttribute("type", "text");
         e.setAttribute("value", data.todoText);
-        e.setAttribute("onchange", "handleAppEvent('" + data.name + "', this.value)");
         e = de.appendChild(e);
 
         return de;

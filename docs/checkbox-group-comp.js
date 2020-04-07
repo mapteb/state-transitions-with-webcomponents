@@ -47,7 +47,6 @@ class CheckboxGroupComp extends HTMLElement {
         e.setAttribute("name", name);
         e.setAttribute("type", "checkbox");
         e.setAttribute("value", nextId);
-        e.setAttribute("onchange", "handleAppEvent(\'" + data.name + "', this.value)");
         e = de.appendChild(e);
 
         var lbl = document.createElement("label");

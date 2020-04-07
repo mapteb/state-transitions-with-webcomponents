@@ -32,7 +32,7 @@ class ButtonComp extends HTMLElement {
     }
 
     createInputButtonElement(data) {
-        let res = '<input type="button" name="' + data.name + '"  class="pure-button" value="' + data.value + '" onclick="handleAppEvent(\'' + data.name + '\', this.value)">';
+        let res = '<input type="button" name="' + data.name + '"  class="pure-button" value="' + data.value + '">';
         return res;
     }    
   }

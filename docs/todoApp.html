@@ -277,19 +277,35 @@
         };
 
         function handleAppEvent(customEventName, eventDta) {
-            var todoEvent = new CustomEvent(customEventName, {
-                detail: {
-                    value: eventDta
-                }
+
+            appEventHelper(customEventName, eventDta);
+
+            document.getElementById("addTodo").addEventListener('change', e => {
+                appEventHelper('addTodo', e.target.value);
             });
-            stateTransitionsManager(todoEvent);
+
+            document.getElementById("changeTodo").addEventListener('change', e => {
+                appEventHelper('changeTodo', e.target.value);
+            });
+
+            document.getElementById("deleteTodo").addEventListener('click', e => {
+                    appEventHelper('deleteTodo', e.target.value);
+            });
         };
+
+        function appEventHelper(customEventName, eventDta){
+            let todoEvent = new CustomEvent(customEventName, {
+                        detail: {
+                            value: eventDta
+                        }
+                    });
+            stateTransitionsManager(todoEvent);
+        }
 
         function stateTransitionsManager(todoEvent) {
             var todoEventAft = appEvents[todoEvent.type].process(todoEvent, handlePostEvent);
 
         }
-
 
         function handlePostEvent(e) {
             appEvents[e.type].nextState(e);
