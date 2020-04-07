@@ -15,22 +15,6 @@ class ButtonComp extends HTMLElement {
             }  
     }
 
-    connectedCallback() {
-
-        let el = this.querySelector('button');
-        if (el != undefined) {
-            el.addEventListener('click', (e) => {
-                this.dispatchEvent(
-                    new CustomEvent('onClick', {
-                        detail: { eventData: e.target.value }
-                    })
-                );
-            });
-        }
-
-
-    }
-
     createInputButtonElement(data) {
         let res = '<input type="button" name="' + data.name + '"  class="pure-button" value="' + data.value + '">';
         return res;
