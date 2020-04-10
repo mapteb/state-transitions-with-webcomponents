@@ -10,11 +10,11 @@ To use this framework the following steps are suggested:
 
 2. Add script tags to the HTML file to reference the web component files (See the script tags for input-comp.js, checkbox-group-comp.js and button-comp.js)
 
-3. Configure the states and events identified in the above state transitions table. (See the JavaScript const objects appStates and appEvents in the [HTML file](https://github.com/mapteb/state-transitions-with-webcomponents/tree/master/docs))
+3. Configure the states and events identified in the above state transitions table. (See the JavaScript const objects appStates and appEvents in the [todoApp.js file](https://github.com/mapteb/state-transitions-with-webcomponents/tree/master/docs))
 
 4. Write code in the processor() functions to communicate with the web components via the corresponding custom element's attributes - data-request and data-response.
 
-5. Add the state machine controller code (see handleAppEvent() and handlePostEvent() functions in the [HTML file](https://github.com/mapteb/state-transitions-with-webcomponents/tree/master/docs))
+5. Add the state machine controller code (see handleAppEvent() and handlePostEvent() functions in the [todoApp.js file](https://github.com/mapteb/state-transitions-with-webcomponents/tree/master/docs))
 
 
 The following state transitions are assumed for the demo TodoMVC UI application are:
