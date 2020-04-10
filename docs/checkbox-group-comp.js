@@ -10,22 +10,13 @@ class CheckboxGroupComp extends HTMLElement {
         if (newVal != null && newVal != undefined && newVal.length > 0 && name === 'data-request') {
             let data = JSON.parse(newVal);
             if (data != null && data.action === 'create') {
-                if(this.innerHTML.length==0) {
-                    this.innerHTML = this.createCheckboxElement(data);
-                } else {
-                    this.innerHTML += this.createCheckboxElement(data);
-                }
+                this.appendChild(this.createCheckboxElement(data));
             } else if (data != null && data.action === 'delete') {
                 for(let i of data.values) {
                     this.removeChild(document.getElementById("div" + i));
                 } 
             } else if (data != null && data.action === 'update') {
-                for(let el of this.getElementsByTagName('input')) {
-                    if(el.value === data.value) {
-                        if (el.checked) el.checked = false;
-                        else el.checked = true;
-                    }
-                }
+                //we are sending a data response below
             }
 
             //update data-response
@@ -46,9 +37,20 @@ class CheckboxGroupComp extends HTMLElement {
         const nextId = data.value;
         const label = data.todoText;
 
-        return `<div id="div${nextId}">
-        <input type="checkbox" name="${name}" value="${nextId}"><label id="lbl${nextId}">${label}</label>
-        </div>`;
+        let de = document.createElement("div");
+        de.setAttribute("id", "div" + nextId);
+        let e = document.createElement("input");
+
+        e.setAttribute("name", name);
+        e.setAttribute("type", "checkbox");
+        e.setAttribute("value", nextId);
+        e = de.appendChild(e);
+
+        let lbl = document.createElement("label");
+        lbl.setAttribute("id", "lbl" + nextId);
+        lbl.innerText = label;
+        e.insertAdjacentElement("afterEnd", lbl)
+        return de;
     }
 }
 window.customElements.define('checkbox-group-comp', CheckboxGroupComp);
