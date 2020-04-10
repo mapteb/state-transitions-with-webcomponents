@@ -18,7 +18,7 @@ class InputComp extends HTMLElement {
 
     createInputTxtElem(data) {
         return `<div id="${data.name}_div">
-                  <input type="text" name="${data.name}" placeholde="Enter text..." value="${data.todoText}">
+                  <input type="text" name="${data.name}" placeholder="Enter text..." value="${data.todoText}">
                 </div>`  
     }
 }
