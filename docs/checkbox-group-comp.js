@@ -8,16 +8,17 @@ class CheckboxGroupComp extends HTMLElement {
 
     attributeChangedCallback(name, oldVal, newVal) {
         if (newVal != null && newVal != undefined && newVal.length > 0 && name === 'data-request') {
-            var data = JSON.parse(newVal);
+            let data = JSON.parse(newVal);
             if (data != null && data.action === 'create') {
                 this.appendChild(this.createCheckboxElement(data));
             } else if (data != null && data.action === 'delete') {
                 console.log(">>> checkbox delete request: ", data.values);
                 data.values.forEach(i => this.removeChild(document.getElementById("div" + i)));
             } else if (data != null && data.action === 'update') {
-                for (let cn of this.childNodes) {
-                    if (cn.nodeType == 1 && cn.nodeName == 'INPUT' && cn.value === data.value) {
-                        cn.checked = !cn.checked;
+                for(let el of this.getElementsByTagName('input')) {
+                    if(el.value === data.value) {
+                        if (el.checked) el.checked = false;
+                        else el.checked = true;
                     }
                 }
             }
@@ -40,16 +41,16 @@ class CheckboxGroupComp extends HTMLElement {
         const nextId = data.value;
         const label = data.todoText;
 
-        var de = document.createElement("div");
+        let de = document.createElement("div");
         de.setAttribute("id", "div" + nextId);
-        var e = document.createElement("input");
+        let e = document.createElement("input");
 
         e.setAttribute("name", name);
         e.setAttribute("type", "checkbox");
         e.setAttribute("value", nextId);
         e = de.appendChild(e);
 
-        var lbl = document.createElement("label");
+        let lbl = document.createElement("label");
         lbl.setAttribute("id", "lbl" + nextId);
         lbl.innerText = label;
         e.insertAdjacentElement("afterEnd", lbl)
