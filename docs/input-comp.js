@@ -17,9 +17,9 @@ class InputComp extends HTMLElement {
     }
 
     createInputTxtElem(data) {
-        var de = document.createElement("div");
+        let de = document.createElement("div");
         de.setAttribute("id", data.name + "_div");
-        var e = document.createElement("input");
+        let e = document.createElement("input");
 
         e.setAttribute("name", data.name);
         e.setAttribute("placeholder", "Enter your text...");
