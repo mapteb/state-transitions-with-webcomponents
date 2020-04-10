@@ -42,4 +42,4 @@ readyForAddSelectUnselectDelete - deleteTodo - processDeleteTodo - deleteTodoSuc
 
 ## Demo
 
-An online demo of this application is available at the [Todo App](https://mapteb.github.io/state-transitions-with-webcomponents/todoApp.html). A copy of the above state transitions is included in the demo page so the interested readers can execute all the steps and confirm that the application is working per the requirements (state transitions, that is). So we see that the state transitions are serving both as requirements and as test cases.
+An online demo of this application is available at the [Todo App](https://mapteb.github.io/state-transitions-with-webcomponents/todoApp.html).
