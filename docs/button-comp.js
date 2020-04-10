@@ -16,7 +16,7 @@ class ButtonComp extends HTMLElement {
     }
 
     createInputButtonElement(data) {
-        return '<input type="button" id="button-comp-id" name="' + data.name + '"  class="pure-button" value="' + data.value + '">';
+        return `<input type="button" id="button-comp-id" name="${data.name}"  class="pure-button" value="${data.value}">`;
     }
 }
 window.customElements.define('button-comp', ButtonComp);
