@@ -9,7 +9,7 @@ class ButtonComp extends HTMLElement {
     attributeChangedCallback(name, oldVal, newVal) {
         if (newVal != null && newVal != undefined && newVal.length > 0 && name === 'data-request') {
             const data = JSON.parse(newVal);
-            if (this.getElementsByTagName(data.name)[0] == undefined) {
+            if (this.getElementsByTagName('input')[0] == undefined) {
                 this.innerHTML = this.createInputButtonElement(data);
             }
         }
