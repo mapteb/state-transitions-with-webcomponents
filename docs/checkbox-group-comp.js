@@ -21,7 +21,7 @@ class CheckboxGroupComp extends HTMLElement {
 
             //update data-response
             //get the selectedItems and itemsCount
-            let nodesArray = Array.from(this.querySelectorAll('input'));
+            let nodesArray = Array.from(this.getElementsByTagName('input'));
 
             let total = nodesArray.length;
             let selected = nodesArray.filter(n => n.checked).map(n => Number(n.value));
