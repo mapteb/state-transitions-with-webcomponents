@@ -47,3 +47,7 @@ An online demo of this application is available at the [Todo App](https://mapteb
 ### More Info
 
 More information about this project is also available at this [DZone article](https://dzone.com/articles/state-transitions-with-web-components).
+
+### Realed Project
+
+The state transitions technique used in this JavaScript project can also be easily adapted to Java/Spring Boot applications. Here is an [example](https://github.com/mapteb/state-transitions-with-spring-integration).
